@@ -1,6 +1,9 @@
 // Hannah Gavilan
 // A basic Arduino rock-paper-scissors game that tracks wins and HP and displays it on the LCD
 
+// Code snippets from:
+// - https://arduinogetstarted.com/tutorials/arduino-button-long-press-short-press
+
 #include <LiquidCrystal.h>
 
 // initialize LCD
