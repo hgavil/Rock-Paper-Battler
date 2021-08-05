@@ -142,7 +142,7 @@ void loop() {
         // reset everything
         wins = 0;
         HP = 8;
-        HPString = "[■■■■■■■■]";
+        HPString = "[OOOOOOOO]";
         remainingPowerUps = 3;
 
         newRound();
