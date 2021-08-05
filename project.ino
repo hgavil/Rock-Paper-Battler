@@ -1,5 +1,5 @@
 // Hannah Gavilan
-// A basic Arduino rock-paper-scissors game that tracks wins and HP and displays it on the LCD
+// An Arduino rock-paper-scissors game. You are a student at a magic school, and your professor is testing your abilities in combat.
 
 // Code snippets from:
 // - https://arduinogetstarted.com/tutorials/arduino-button-long-press-short-press
@@ -33,11 +33,12 @@ int fireInput, waterInput, earthInput, powerUpInput = 0;
 
 // game variables
 int HP = 8;
-//String HPstring = "[■■■■■■■■]";
+String HPString = "[OOOOOOOO]";
 int wins = 0;
 int enemy = 0;
 int remainingPowerUps = 3;
 int highScore = 0;
+
 
 // reset the enemy and display information to the serial monitor
 void newRound() {
@@ -65,7 +66,7 @@ void newRound() {
     Serial.print("  Wins: ");
     Serial.println(wins);
     Serial.print("  HP: ");
-    Serial.println(HP);
+    Serial.println(HPString);
     Serial.print("  Observations remaining: ");
     Serial.println(remainingPowerUps);
   }
@@ -83,9 +84,11 @@ void setup() {
   pinMode(waterLed, OUTPUT);
   pinMode(earthLed, OUTPUT);
 
+  enemy = random(1,4);
+
   Serial.println("Welcome to (game title)!");
   Serial.println("The professor will choose an attack of either Fire, Water, or Earth."); delay(2000);
-  Serial.println("You must choose your own attack and counter his.)"; delay(2000);
+  Serial.println("You must choose your own attack and counter his."); delay(2000);
   Serial.println("Fire will beat Earth, Water will beat Fire, and Earth will beat Water."); delay(2000);
   Serial.println("Beating the professor adds to your score. Losing will lower your HP. Once your HP reaches 0, the game ends."); delay(2000);
 
@@ -98,14 +101,22 @@ void setup() {
   Serial.println(enemy); 
 
   // display the current information
+  Serial.println("The professor is preparing his attack. What will you do?");
   Serial.print("  Wins: ");
   Serial.println(wins);
   Serial.print("  HP: ");
-  Serial.println(HP);
+  Serial.println(HPString);
   Serial.print("  Observations remaining: ");
   Serial.println(remainingPowerUps);
+
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Wins: ");
+  lcd.setCursor(6,0);
+  lcd.print(wins);
+  lcd.setCursor(0,1);
+  lcd.print(HPString);
   
-  lcd.print("R-P-S");
   delay(3000);
 
 }
@@ -130,6 +141,7 @@ void loop() {
         // reset everything
         wins = 0;
         HP = 8;
+        HPString = "[■■■■■■■■]";
         remainingPowerUps = 3;
 
         newRound();
@@ -210,6 +222,7 @@ void loop() {
           delay(3000);
           // decrement the hp and change the enemy's attack
           HP--;
+          HPString.remove(HP+1,1);
           break;
   
         case 3: // ENEMY CHOSE EARTH
@@ -258,6 +271,7 @@ void loop() {
             delay(3000);
             // decrement the hp and change the enemy's attack
             HP--;
+            HPString.remove(HP+1,1);
             break;
           }
     
@@ -284,6 +298,7 @@ void loop() {
             delay(3000);
             // decrement the hp and change the enemy's attack
             HP--;
+            HPString.remove(HP+1,1);
             break;
             
           case 2: // ENEMY CHOSE WATER
