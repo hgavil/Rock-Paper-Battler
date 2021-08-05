@@ -90,6 +90,7 @@ void setup() {
   Serial.println("The professor will choose an attack of either Fire, Water, or Earth."); delay(2000);
   Serial.println("You must choose your own attack and counter his."); delay(2000);
   Serial.println("Fire will beat Earth, Water will beat Fire, and Earth will beat Water."); delay(2000);
+  Serial.println("You may Observe the professor up to 3 times to see which attack he WON'T use.");
   Serial.println("Beating the professor adds to your score. Losing will lower your HP. Once your HP reaches 0, the game ends."); delay(2000);
 
   Serial.println("=================================");
