@@ -32,8 +32,8 @@ bool fireTriggered, waterTriggered, earthTriggered, powerUpTriggered = 0;
 int fireInput, waterInput, earthInput, powerUpInput = 0;
 
 // game variables
-int HP = 8;
-String HPString = "[OOOOOOOO]";
+int HP = 3;
+String HPString = "[OOO]";
 int wins = 0;
 int enemy = 0;
 int remainingPowerUps = 3;
@@ -48,7 +48,7 @@ void newRound() {
     Serial.print(wins);
     Serial.println(" times! Press the Observe button to restart.");
     Serial.println("=============================================");
-
+    
     if (wins > highScore) highScore = wins;
   }
 
@@ -123,6 +123,18 @@ void setup() {
 }
 
 void loop() {
+  // read the button inputs
+  fireState = digitalRead(fireButton);
+  waterState = digitalRead(waterButton);
+  earthState = digitalRead(earthButton);
+  powerUpState = digitalRead(powerUp);
+
+
+  // reset the leds
+  digitalWrite(fireLed, LOW);
+  digitalWrite(waterLed, LOW);
+  digitalWrite(earthLed, LOW);
+  
   if (HP == 0) {
     // RESTART THE GAME
     if (powerUpPrev == HIGH && powerUpState == LOW) { // button was pressed
@@ -142,26 +154,14 @@ void loop() {
         // reset everything
         wins = 0;
         HP = 8;
-        HPString = "[OOOOOOOO]";
+        HPString = "[OOO]";
         remainingPowerUps = 3;
 
         newRound();
       }
     }
   }
-  else {
-    // read the button inputs
-    fireState = digitalRead(fireButton);
-    waterState = digitalRead(waterButton);
-    earthState = digitalRead(earthButton);
-    powerUpState = digitalRead(powerUp);
-  
-  
-    // reset the leds
-    digitalWrite(fireLed, LOW);
-    digitalWrite(waterLed, LOW);
-    digitalWrite(earthLed, LOW);
-    
+  else {    
     lcd.setCursor(0, 0);
     lcd.print("Wins: ");
     lcd.setCursor(6, 0);
@@ -321,9 +321,10 @@ void loop() {
         }
     }
   
+
+  }
     firePrev = fireState;
     waterPrev = waterState;
     earthPrev = earthState;
     powerUpPrev = powerUpState;
-  }
 }
